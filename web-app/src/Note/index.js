@@ -50,6 +50,7 @@ const Note = ({ onSave }) => {
   };
 
   useEffect(() => {
+    setSaveStatus("IDLE");
     fetchNote();
   }, [id, fetchNote]);
 
