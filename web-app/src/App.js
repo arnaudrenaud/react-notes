@@ -12,7 +12,7 @@ import {
 import { NoteList } from "./NoteList/NoteList.styled";
 import LinkToNote from "./LinkToNote";
 import Note from "./Note";
-import { Loader } from "./Note/Note.styled";
+import { Loader } from "./Loader/Loader.styled";
 
 function App() {
   const [notes, setNotes] = useState(null);

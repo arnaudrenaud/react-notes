@@ -4,12 +4,13 @@ import {
   Form,
   Title,
   Content,
-  SaveButton,
   SaveAndStatus,
-  Loader,
   ErrorMessage,
+  Actions,
 } from "./Note.styled";
-import { FiCheck } from "react-icons/fi";
+import { Button, DangerButton } from "../Button/Button.styled";
+import { Loader } from "../Loader/Loader.styled";
+import { FiCheck, FiTrash } from "react-icons/fi";
 import { IconAndLabel } from "../IconAndLabel/IconAndLabel.styled";
 import { FullHeightAndWidthCentered } from "../App.styled";
 
@@ -98,19 +99,24 @@ const Note = ({ onSave }) => {
           });
         }}
       />
-      <SaveAndStatus>
-        <SaveButton>Enregistrer</SaveButton>
-        {saveStatus === "SAVED" ? (
-          <IconAndLabel>
-            <FiCheck />
-            Enregistré
-          </IconAndLabel>
-        ) : saveStatus === "ERROR" ? (
-          <ErrorMessage>Erreur lors de la sauvegarde</ErrorMessage>
-        ) : saveStatus === "LOADING" ? (
-          <Loader />
-        ) : null}
-      </SaveAndStatus>
+      <Actions>
+        <SaveAndStatus>
+          <Button>Enregistrer</Button>
+          {saveStatus === "SAVED" ? (
+            <IconAndLabel>
+              <FiCheck />
+              Enregistré
+            </IconAndLabel>
+          ) : saveStatus === "ERROR" ? (
+            <ErrorMessage>Erreur lors de la sauvegarde</ErrorMessage>
+          ) : saveStatus === "LOADING" ? (
+            <Loader />
+          ) : null}
+        </SaveAndStatus>
+        <DangerButton type="button">
+          <FiTrash />
+        </DangerButton>
+      </Actions>
     </Form>
   );
 };

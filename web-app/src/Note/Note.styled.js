@@ -1,4 +1,3 @@
-import { FiLoader } from "react-icons/fi";
 import styled from "styled-components";
 
 const INPUT_PADDING = 12;
@@ -31,48 +30,18 @@ export const Content = styled.textarea`
   resize: none;
 `;
 
-export const SaveAndStatus = styled.div`
+export const Actions = styled.div`
+  display: flex;
   height: 60px;
+  justify-content: space-between;
+  align-items: center;
   padding: ${INPUT_PADDING}px;
   border-top: 1px solid ${({ theme }) => theme.asideBackgroundColor};
+`;
+
+export const SaveAndStatus = styled.div`
   display: flex;
-  align-items: center;
   gap: 8px;
-`;
-
-export const SaveButton = styled.button`
-  height: 40px;
-  border: 1px solid ${({ theme }) => theme.asideBackgroundColor};
-  font-size: inherit;
-  color: inherit;
-  background-color: ${({ theme }) => theme.asideBackgroundColor};
-`;
-
-export const Loader = styled(FiLoader)`
-  -webkit-animation: icon-spin 2s infinite linear;
-  animation: icon-spin 2s infinite linear;
-
-  @-webkit-keyframes icon-spin {
-    0% {
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    100% {
-      -webkit-transform: rotate(359deg);
-      transform: rotate(359deg);
-    }
-  }
-
-  @keyframes icon-spin {
-    0% {
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    100% {
-      -webkit-transform: rotate(359deg);
-      transform: rotate(359deg);
-    }
-  }
 `;
 
 export const ErrorMessage = styled.div`
