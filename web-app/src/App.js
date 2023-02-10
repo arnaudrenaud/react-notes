@@ -8,6 +8,8 @@ import {
   Main,
   FullHeightAndWidthCentered,
   LoaderWrapper,
+  ProfileName,
+  ProfileNameContainer,
 } from "./App.styled";
 import { NoteList } from "./NoteList/NoteList.styled";
 import LinkToNote from "./LinkToNote";
@@ -15,6 +17,7 @@ import Note from "./Note";
 import { Loader } from "./Loader/Loader.styled";
 
 function App() {
+  const [profileName, setProfileName] = useState("");
   const [notes, setNotes] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,6 +26,12 @@ function App() {
     const notes = await response.json();
     setIsLoading(false);
     setNotes(notes);
+  };
+
+  const fetchProfile = async () => {
+    const response = await fetch("/profile");
+    const profile = await response.json();
+    setProfileName(profile.name);
   };
 
   const updateNote = (noteToUpdate) => {
@@ -39,12 +48,18 @@ function App() {
 
   useEffect(() => {
     fetchNotes();
+    fetchProfile();
   }, []);
 
   return (
     <ThemeProvider theme={darkTheme}>
       <GlobalStyle />
       <Side>
+        <ProfileNameContainer>
+          <ProfileName>
+            {profileName.split(" ").map((name) => name[0])}
+          </ProfileName>
+        </ProfileNameContainer>
         {isLoading && (
           <LoaderWrapper>
             <Loader />
