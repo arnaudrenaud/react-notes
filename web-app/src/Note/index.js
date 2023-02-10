@@ -141,7 +141,11 @@ const Note = ({ onSave, onDelete }) => {
         </Actions>
       </Form>
       {showDeletionModal && (
-        <Modal>
+        <Modal
+          onClose={() => {
+            setShowDeletionModal(false);
+          }}
+        >
           <Dialog
             content={"Voulez-vous supprimer la note ?"}
             buttons={
