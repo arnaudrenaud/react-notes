@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { FiX } from "react-icons/fi";
-import { Box, BoxContent, CloseButton, Container } from "./Modal.styled";
+import { Box, BoxContent, CloseButton } from "./Modal.styled";
+import { Overlay } from "../Overlay/Overlay.styled";
 
 const Modal = ({ children, onClose }) => {
   useEffect(() => {
@@ -18,7 +19,7 @@ const Modal = ({ children, onClose }) => {
   }, [onClose]);
 
   return (
-    <Container onClick={onClose}>
+    <Overlay onClick={onClose}>
       <Box
         onClick={(event) => {
           event.stopPropagation();
@@ -29,7 +30,7 @@ const Modal = ({ children, onClose }) => {
         </CloseButton>
         <BoxContent>{children}</BoxContent>
       </Box>
-    </Container>
+    </Overlay>
   );
 };
 

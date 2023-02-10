@@ -2,11 +2,11 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Form,
-  Title,
   Content,
   SaveAndStatus,
   ErrorMessage,
   Actions,
+  Title,
 } from "./Note.styled";
 import { Button, DangerButton, PrimaryButton } from "../Button/Button.styled";
 import { Loader } from "../Loader/Loader.styled";

@@ -1,11 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 
+export const INPUT_PADDING = 12;
+
 export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
 
-  *:focus {
+  *:focus, button:active, input:active, link:active {
     outline: none;
     box-shadow: inset 0px 0px 0px 2px ${({ theme }) => theme.mainTextColor};
   }

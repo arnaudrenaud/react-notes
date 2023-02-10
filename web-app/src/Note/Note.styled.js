@@ -1,6 +1,6 @@
 import styled from "styled-components";
-
-const INPUT_PADDING = 12;
+import { INPUT_PADDING } from "../GlobalStyle";
+import { TextInput } from "../TextInput/TextInput";
 
 export const Form = styled.form`
   height: 100%;
@@ -9,14 +9,10 @@ export const Form = styled.form`
   align-items: stretch;
 `;
 
-export const Title = styled.input`
+export const Title = styled(TextInput)`
   height: 60px;
-  border: none;
-  border-bottom: 1px solid ${({ theme }) => theme.asideBackgroundColor};
-  padding: ${INPUT_PADDING}px;
   font-size: 24px;
-  color: inherit;
-  background: transparent;
+  background: inherit;
 `;
 
 export const Content = styled.textarea`

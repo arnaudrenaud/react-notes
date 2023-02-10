@@ -8,13 +8,12 @@ import {
   Main,
   FullHeightAndWidthCentered,
   LoaderWrapper,
-  ProfileName,
-  ProfileNameContainer,
 } from "./App.styled";
 import { NoteList } from "./NoteList/NoteList.styled";
 import LinkToNote from "./LinkToNote";
 import Note from "./Note";
 import { Loader } from "./Loader/Loader.styled";
+import SideActions from "./SideActions";
 
 function App() {
   const [profileName, setProfileName] = useState("");
@@ -55,11 +54,10 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <GlobalStyle />
       <Side>
-        <ProfileNameContainer>
-          <ProfileName>
-            {profileName.split(" ").map((name) => name[0])}
-          </ProfileName>
-        </ProfileNameContainer>
+        <SideActions
+          profileName={profileName}
+          onProfileUpdate={setProfileName}
+        />
         {isLoading && (
           <LoaderWrapper>
             <Loader />

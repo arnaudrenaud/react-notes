@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { PrimaryButton } from "./Button/Button.styled";
 
 const SIDE_WIDTH = 240;
 
@@ -31,15 +30,4 @@ export const FullHeightAndWidthCentered = styled.div`
 export const LoaderWrapper = styled.div`
   height: 60px;
   ${CENTERED}
-`;
-
-export const ProfileNameContainer = styled.div`
-  padding: 16px;
-`;
-
-export const ProfileName = styled(PrimaryButton)`
-  width: 40px;
-  border-radius: 20px;
-  text-transform: capitalize;
-  background-color: ${({ theme }) => theme.mainBackgroundColor};
 `;
