@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, PrimaryButton } from "../Button/Button.styled";
 import { MenuStepButtons, MenuStepContainer } from "../MenuStep/MenuStep";
+import { ProfileContext } from "../ProfileContext";
 import { TextInput } from "../TextInput/TextInput";
 
-const UpdateProfile = ({
-  profileName: initialProfileName,
-  onProfileUpdate,
-}) => {
+const UpdateProfile = ({ onSubmit }) => {
+  const { profileName: initialProfileName, onProfileUpdate } =
+    useContext(ProfileContext);
   const [profileName, setProfileName] = useState(initialProfileName);
 
   const saveProfile = async () => {
@@ -18,6 +18,7 @@ const UpdateProfile = ({
       },
     });
     onProfileUpdate(profileName);
+    onSubmit();
   };
 
   return (

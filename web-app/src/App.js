@@ -14,6 +14,7 @@ import LinkToNote from "./LinkToNote";
 import Note from "./Note";
 import { Loader } from "./Loader/Loader.styled";
 import SideActions from "./SideActions";
+import { ProfileContext } from "./ProfileContext";
 
 function App() {
   const [profileName, setProfileName] = useState("");
@@ -52,43 +53,44 @@ function App() {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <GlobalStyle />
-      <Side>
-        <SideActions
-          profileName={profileName}
-          onProfileUpdate={setProfileName}
-        />
-        {isLoading && (
-          <LoaderWrapper>
-            <Loader />
-          </LoaderWrapper>
-        )}
-        {notes && (
-          <NoteList>
-            {notes.map((note) => (
-              <li key={note.id}>
-                <LinkToNote id={note.id} title={note.title} />
-              </li>
-            ))}
-          </NoteList>
-        )}
-      </Side>
-      <Main>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <FullHeightAndWidthCentered>
-                {!isLoading && "Sélectionnez une note pour l'éditer"}
-              </FullHeightAndWidthCentered>
-            }
-          />
-          <Route
-            path="/notes/:id"
-            element={<Note onSave={updateNote} onDelete={deleteNote} />}
-          />
-        </Routes>
-      </Main>
+      <ProfileContext.Provider
+        value={{ profileName, onProfileUpdate: setProfileName }}
+      >
+        <GlobalStyle />
+        <Side>
+          <SideActions />
+          {isLoading && (
+            <LoaderWrapper>
+              <Loader />
+            </LoaderWrapper>
+          )}
+          {notes && (
+            <NoteList>
+              {notes.map((note) => (
+                <li key={note.id}>
+                  <LinkToNote id={note.id} title={note.title} />
+                </li>
+              ))}
+            </NoteList>
+          )}
+        </Side>
+        <Main>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <FullHeightAndWidthCentered>
+                  {!isLoading && "Sélectionnez une note pour l'éditer"}
+                </FullHeightAndWidthCentered>
+              }
+            />
+            <Route
+              path="/notes/:id"
+              element={<Note onSave={updateNote} onDelete={deleteNote} />}
+            />
+          </Routes>
+        </Main>
+      </ProfileContext.Provider>
     </ThemeProvider>
   );
 }
