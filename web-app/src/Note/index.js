@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Form,
   Title,
@@ -8,18 +8,23 @@ import {
   ErrorMessage,
   Actions,
 } from "./Note.styled";
-import { Button, DangerButton } from "../Button/Button.styled";
+import { Button, DangerButton, PrimaryButton } from "../Button/Button.styled";
 import { Loader } from "../Loader/Loader.styled";
 import { FiCheck, FiTrash } from "react-icons/fi";
 import { IconAndLabel } from "../IconAndLabel/IconAndLabel.styled";
 import { FullHeightAndWidthCentered } from "../App.styled";
+import Modal from "../Modal";
+import Dialog from "../Dialog";
 
-const Note = ({ onSave }) => {
+const Note = ({ onSave, onDelete }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [note, setNote] = useState(null);
   const [getStatus, setGetStatus] = useState("IDLE");
   const [saveStatus, setSaveStatus] = useState("IDLE");
+
+  const [showDeletionModal, setShowDeletionModal] = useState(false);
 
   const fetchNote = useCallback(async () => {
     setGetStatus("LOADING");
@@ -50,6 +55,17 @@ const Note = ({ onSave }) => {
     }
   };
 
+  const deleteNote = async () => {
+    const response = await fetch(`/notes/${note.id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      setShowDeletionModal(false);
+      onDelete(note.id);
+      navigate("/");
+    }
+  };
+
   useEffect(() => {
     setSaveStatus("IDLE");
     fetchNote();
@@ -72,52 +88,78 @@ const Note = ({ onSave }) => {
   }
 
   return (
-    <Form
-      onSubmit={(event) => {
-        event.preventDefault();
-        saveNote();
-      }}
-    >
-      <Title
-        type="text"
-        value={note ? note.title : ""}
-        onChange={(event) => {
-          setSaveStatus("IDLE");
-          setNote({
-            ...note,
-            title: event.target.value,
-          });
+    <>
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault();
+          saveNote();
         }}
-      />
-      <Content
-        value={note ? note.content : ""}
-        onChange={(event) => {
-          setSaveStatus("IDLE");
-          setNote({
-            ...note,
-            content: event.target.value,
-          });
-        }}
-      />
-      <Actions>
-        <SaveAndStatus>
-          <Button>Enregistrer</Button>
-          {saveStatus === "SAVED" ? (
-            <IconAndLabel>
-              <FiCheck />
-              Enregistré
-            </IconAndLabel>
-          ) : saveStatus === "ERROR" ? (
-            <ErrorMessage>Erreur lors de la sauvegarde</ErrorMessage>
-          ) : saveStatus === "LOADING" ? (
-            <Loader />
-          ) : null}
-        </SaveAndStatus>
-        <DangerButton type="button">
-          <FiTrash />
-        </DangerButton>
-      </Actions>
-    </Form>
+      >
+        <Title
+          type="text"
+          value={note ? note.title : ""}
+          onChange={(event) => {
+            setSaveStatus("IDLE");
+            setNote({
+              ...note,
+              title: event.target.value,
+            });
+          }}
+        />
+        <Content
+          value={note ? note.content : ""}
+          onChange={(event) => {
+            setSaveStatus("IDLE");
+            setNote({
+              ...note,
+              content: event.target.value,
+            });
+          }}
+        />
+        <Actions>
+          <SaveAndStatus>
+            <PrimaryButton>Enregistrer</PrimaryButton>
+            {saveStatus === "SAVED" ? (
+              <IconAndLabel>
+                <FiCheck />
+                Enregistré
+              </IconAndLabel>
+            ) : saveStatus === "ERROR" ? (
+              <ErrorMessage>Erreur lors de la sauvegarde</ErrorMessage>
+            ) : saveStatus === "LOADING" ? (
+              <Loader />
+            ) : null}
+          </SaveAndStatus>
+          <DangerButton
+            type="button"
+            onClick={() => {
+              setShowDeletionModal(true);
+            }}
+          >
+            <FiTrash />
+          </DangerButton>
+        </Actions>
+      </Form>
+      {showDeletionModal && (
+        <Modal>
+          <Dialog
+            content={"Voulez-vous supprimer la note ?"}
+            buttons={
+              <>
+                <Button
+                  onClick={() => {
+                    setShowDeletionModal(false);
+                  }}
+                >
+                  Annuler
+                </Button>
+                <DangerButton onClick={deleteNote}>Supprimer</DangerButton>
+              </>
+            }
+          />
+        </Modal>
+      )}
+    </>
   );
 };
 

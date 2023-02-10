@@ -31,6 +31,12 @@ function App() {
     );
   };
 
+  const deleteNote = (idToDelete) => {
+    const filtered = notes.filter((note) => note.id !== idToDelete);
+    console.log({ idToDelete, filtered });
+    setNotes(filtered);
+  };
+
   useEffect(() => {
     fetchNotes();
   }, []);
@@ -64,7 +70,10 @@ function App() {
               </FullHeightAndWidthCentered>
             }
           />
-          <Route path="/notes/:id" element={<Note onSave={updateNote} />} />
+          <Route
+            path="/notes/:id"
+            element={<Note onSave={updateNote} onDelete={deleteNote} />}
+          />
         </Routes>
       </Main>
     </ThemeProvider>

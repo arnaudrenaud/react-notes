@@ -8,6 +8,10 @@ export const Button = styled.button`
   align-items: center;
   font-size: inherit;
   color: inherit;
+  background-color: transparent;
+`;
+
+export const PrimaryButton = styled(Button)`
   background-color: ${({ theme }) => theme.asideBackgroundColor};
 `;
 
